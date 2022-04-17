@@ -1,7 +1,7 @@
 # The weighted average formulas for the game of baseball
-
 from dataset import *
 
+# Concatenating all the datasets into one
 Batting_df_all = pd.concat([teams.batting.ARI, teams.batting.ATL, teams.batting.BAL, teams.batting.BOS,
                             teams.batting.CHC, teams.batting.CHW, teams.batting.CIN, teams.batting.CLE,
                             teams.batting.COL, teams.batting.DET, teams.batting.HOU, teams.batting.KCR,
@@ -11,7 +11,6 @@ Batting_df_all = pd.concat([teams.batting.ARI, teams.batting.ATL, teams.batting.
                             teams.batting.SFG, teams.batting.STL, teams.batting.TBR, teams.batting.TEX,
                             teams.batting.TOR, teams.batting.WSN
                             ]).reset_index().drop(columns = 'index')
-
 Pitching_df_all = pd.concat([teams.pitching.ARI, teams.pitching.ATL, teams.pitching.BAL, teams.pitching.BOS,
                             teams.pitching.CHC, teams.pitching.CHW, teams.pitching.CIN, teams.pitching.CLE,
                             teams.pitching.COL, teams.pitching.DET, teams.pitching.HOU, teams.pitching.KCR,
@@ -22,6 +21,7 @@ Pitching_df_all = pd.concat([teams.pitching.ARI, teams.pitching.ATL, teams.pitch
                             teams.pitching.TOR, teams.pitching.WSN
                             ]).reset_index().drop(columns = 'index')
 
+# Normalization Function
 def normalized_batting_stats(all_batting_df, all_pitching_df):
     batting_stats = []
     pitching_stats = []
@@ -58,192 +58,108 @@ def normalized_batting_stats(all_batting_df, all_pitching_df):
                       So_sum_pitching_mean, R_sum_pitching_SD, H_sum_pitching_SD, ER_sum_pitching_SD, HR_sum_pitching_SD,
                       BB_sum_pitching_SD, So_sum_pitching_SD]
     return [batting_stats, pitching_stats]
-def team_one(batting, pitching):
-    R_sum_batting = (((batting.iloc[:,0]).astype(int) - Statistics_used_for_normalization[0][0]) / Statistics_used_for_normalization[0][6]).mean()
-    H_sum_batting = (((batting.iloc[:,1]).astype(int) - Statistics_used_for_normalization[0][1]) / Statistics_used_for_normalization[0][7]).mean()
-    two_B_sum_batting = (((batting.iloc[:,2]).astype(int) - Statistics_used_for_normalization[0][2]) / Statistics_used_for_normalization[0][8]).mean()
-    three_B_sum_batting = (((batting.iloc[:,3]).astype(int) - Statistics_used_for_normalization[0][3]) / Statistics_used_for_normalization[0][9]).mean()
-    RBI_sum_batting = (((batting.iloc[:,4]).astype(int) - Statistics_used_for_normalization[0][4]) / Statistics_used_for_normalization[0][10]).mean()
-    SB_sum_batting = (((batting.iloc[:,5]).astype(int) - Statistics_used_for_normalization[0][5]) / Statistics_used_for_normalization[0][11]).mean()
-    batting_final = (0.25*(H_sum_batting)) + (0.2*(R_sum_batting)) + (0.2*(three_B_sum_batting)) +\
-                    (0.15*(SB_sum_batting)) + (0.1*(RBI_sum_batting)) + (0.1*(two_B_sum_batting))
-    R_sum_pitching = (((pitching.iloc[:,0]).astype(int) - Statistics_used_for_normalization[1][0]) / Statistics_used_for_normalization[1][6]).mean()
-    H_sum_pitching = (((pitching.iloc[:,1]).astype(int) - Statistics_used_for_normalization[1][1]) / Statistics_used_for_normalization[1][7]).mean()
-    ER_sum_pitching = (((pitching.iloc[:,2]).astype(int) - Statistics_used_for_normalization[1][2]) / Statistics_used_for_normalization[1][8]).mean()
-    HR_sum_pitching = (((pitching.iloc[:,3]).astype(int) - Statistics_used_for_normalization[1][3]) / Statistics_used_for_normalization[1][9]).mean()
-    BB_sum_pitching = (((pitching.iloc[:,4]).astype(int) - Statistics_used_for_normalization[1][4]) / Statistics_used_for_normalization[1][10]).mean()
-    So_sum_pitching = (((pitching.iloc[:,5]).astype(int) - Statistics_used_for_normalization[1][5]) / Statistics_used_for_normalization[1][11]).mean()
-    pitching_final = (0.15*(H_sum_pitching)) + (0.15*(R_sum_pitching)) + (0.15*(ER_sum_pitching)) + \
-                     (0.05*(HR_sum_pitching)) + (0.05*(BB_sum_pitching)) - (0.45*(So_sum_pitching))
-    team_one_average = batting_final - pitching_final
-    return team_one_average
-def team_two(batting, pitching):
-    R_sum_batting = (((batting.iloc[:,0]).astype(int) - Statistics_used_for_normalization[0][0]) / Statistics_used_for_normalization[0][6]).mean()
-    H_sum_batting = (((batting.iloc[:,1]).astype(int) - Statistics_used_for_normalization[0][1]) / Statistics_used_for_normalization[0][7]).mean()
-    two_B_sum_batting = (((batting.iloc[:,2]).astype(int) - Statistics_used_for_normalization[0][2]) / Statistics_used_for_normalization[0][8]).mean()
-    three_B_sum_batting = (((batting.iloc[:,3]).astype(int) - Statistics_used_for_normalization[0][3]) / Statistics_used_for_normalization[0][9]).mean()
-    RBI_sum_batting = (((batting.iloc[:,4]).astype(int) - Statistics_used_for_normalization[0][4]) / Statistics_used_for_normalization[0][10]).mean()
-    SB_sum_batting = (((batting.iloc[:,5]).astype(int) - Statistics_used_for_normalization[0][5]) / Statistics_used_for_normalization[0][11]).mean()
-    batting_final = (0.25*(H_sum_batting)) + (0.2*(R_sum_batting)) + (0.2*(three_B_sum_batting)) +\
-                    (0.15*(SB_sum_batting)) + (0.1*(RBI_sum_batting)) + (0.1*(two_B_sum_batting))
-    R_sum_pitching = (((pitching.iloc[:,0]).astype(int) - Statistics_used_for_normalization[1][0]) / Statistics_used_for_normalization[1][6]).mean()
-    H_sum_pitching = (((pitching.iloc[:,1]).astype(int) - Statistics_used_for_normalization[1][1]) / Statistics_used_for_normalization[1][7]).mean()
-    ER_sum_pitching = (((pitching.iloc[:,2]).astype(int) - Statistics_used_for_normalization[1][2]) / Statistics_used_for_normalization[1][8]).mean()
-    HR_sum_pitching = (((pitching.iloc[:,3]).astype(int) - Statistics_used_for_normalization[1][3]) / Statistics_used_for_normalization[1][9]).mean()
-    BB_sum_pitching = (((pitching.iloc[:,4]).astype(int) - Statistics_used_for_normalization[1][4]) / Statistics_used_for_normalization[1][10]).mean()
-    So_sum_pitching = (((pitching.iloc[:,5]).astype(int) - Statistics_used_for_normalization[1][5]) / Statistics_used_for_normalization[1][11]).mean()
-    pitching_final = (0.15*(H_sum_pitching)) + (0.15*(R_sum_pitching)) + (0.15*(ER_sum_pitching)) + \
-                     (0.05*(HR_sum_pitching)) + (0.05*(BB_sum_pitching)) - (0.45*(So_sum_pitching))
-    team_two_average = batting_final - pitching_final
-    return team_two_average
+
+# Class to represent the team stats
+class team_stats:
+    def team_one(batting, pitching):
+        R_sum_batting = (((batting.iloc[:,0]).astype(int) - Statistics_used_for_normalization[0][0]) / Statistics_used_for_normalization[0][6]).mean()
+        H_sum_batting = (((batting.iloc[:,1]).astype(int) - Statistics_used_for_normalization[0][1]) / Statistics_used_for_normalization[0][7]).mean()
+        two_B_sum_batting = (((batting.iloc[:,2]).astype(int) - Statistics_used_for_normalization[0][2]) / Statistics_used_for_normalization[0][8]).mean()
+        three_B_sum_batting = (((batting.iloc[:,3]).astype(int) - Statistics_used_for_normalization[0][3]) / Statistics_used_for_normalization[0][9]).mean()
+        RBI_sum_batting = (((batting.iloc[:,4]).astype(int) - Statistics_used_for_normalization[0][4]) / Statistics_used_for_normalization[0][10]).mean()
+        SB_sum_batting = (((batting.iloc[:,5]).astype(int) - Statistics_used_for_normalization[0][5]) / Statistics_used_for_normalization[0][11]).mean()
+        batting_final = (0.25*(H_sum_batting)) + (0.2*(R_sum_batting)) + (0.2*(three_B_sum_batting)) +\
+                        (0.15*(SB_sum_batting)) + (0.1*(RBI_sum_batting)) + (0.1*(two_B_sum_batting))
+        R_sum_pitching = (((pitching.iloc[:,0]).astype(int) - Statistics_used_for_normalization[1][0]) / Statistics_used_for_normalization[1][6]).mean()
+        H_sum_pitching = (((pitching.iloc[:,1]).astype(int) - Statistics_used_for_normalization[1][1]) / Statistics_used_for_normalization[1][7]).mean()
+        ER_sum_pitching = (((pitching.iloc[:,2]).astype(int) - Statistics_used_for_normalization[1][2]) / Statistics_used_for_normalization[1][8]).mean()
+        HR_sum_pitching = (((pitching.iloc[:,3]).astype(int) - Statistics_used_for_normalization[1][3]) / Statistics_used_for_normalization[1][9]).mean()
+        BB_sum_pitching = (((pitching.iloc[:,4]).astype(int) - Statistics_used_for_normalization[1][4]) / Statistics_used_for_normalization[1][10]).mean()
+        So_sum_pitching = (((pitching.iloc[:,5]).astype(int) - Statistics_used_for_normalization[1][5]) / Statistics_used_for_normalization[1][11]).mean()
+        pitching_final = (0.15*(H_sum_pitching)) + (0.15*(R_sum_pitching)) + (0.15*(ER_sum_pitching)) + \
+                         (0.05*(HR_sum_pitching)) + (0.05*(BB_sum_pitching)) - (0.45*(So_sum_pitching))
+        team_one_average = batting_final - pitching_final
+        return team_one_average
+    def team_two(batting, pitching):
+        R_sum_batting = (((batting.iloc[:,0]).astype(int) - Statistics_used_for_normalization[0][0]) / Statistics_used_for_normalization[0][6]).mean()
+        H_sum_batting = (((batting.iloc[:,1]).astype(int) - Statistics_used_for_normalization[0][1]) / Statistics_used_for_normalization[0][7]).mean()
+        two_B_sum_batting = (((batting.iloc[:,2]).astype(int) - Statistics_used_for_normalization[0][2]) / Statistics_used_for_normalization[0][8]).mean()
+        three_B_sum_batting = (((batting.iloc[:,3]).astype(int) - Statistics_used_for_normalization[0][3]) / Statistics_used_for_normalization[0][9]).mean()
+        RBI_sum_batting = (((batting.iloc[:,4]).astype(int) - Statistics_used_for_normalization[0][4]) / Statistics_used_for_normalization[0][10]).mean()
+        SB_sum_batting = (((batting.iloc[:,5]).astype(int) - Statistics_used_for_normalization[0][5]) / Statistics_used_for_normalization[0][11]).mean()
+        batting_final = (0.25*(H_sum_batting)) + (0.2*(R_sum_batting)) + (0.2*(three_B_sum_batting)) +\
+                        (0.15*(SB_sum_batting)) + (0.1*(RBI_sum_batting)) + (0.1*(two_B_sum_batting))
+        R_sum_pitching = (((pitching.iloc[:,0]).astype(int) - Statistics_used_for_normalization[1][0]) / Statistics_used_for_normalization[1][6]).mean()
+        H_sum_pitching = (((pitching.iloc[:,1]).astype(int) - Statistics_used_for_normalization[1][1]) / Statistics_used_for_normalization[1][7]).mean()
+        ER_sum_pitching = (((pitching.iloc[:,2]).astype(int) - Statistics_used_for_normalization[1][2]) / Statistics_used_for_normalization[1][8]).mean()
+        HR_sum_pitching = (((pitching.iloc[:,3]).astype(int) - Statistics_used_for_normalization[1][3]) / Statistics_used_for_normalization[1][9]).mean()
+        BB_sum_pitching = (((pitching.iloc[:,4]).astype(int) - Statistics_used_for_normalization[1][4]) / Statistics_used_for_normalization[1][10]).mean()
+        So_sum_pitching = (((pitching.iloc[:,5]).astype(int) - Statistics_used_for_normalization[1][5]) / Statistics_used_for_normalization[1][11]).mean()
+        pitching_final = (0.15*(H_sum_pitching)) + (0.15*(R_sum_pitching)) + (0.15*(ER_sum_pitching)) + \
+                         (0.05*(HR_sum_pitching)) + (0.05*(BB_sum_pitching)) - (0.45*(So_sum_pitching))
+        team_two_average = batting_final - pitching_final
+        return team_two_average
+
+# Function to tell me who is going to win based on average comparison
 def game_results(team_one_average_results, team_two_average_results):
     if team_one_average_results > team_two_average_results:
         results = team_one_input
     else: results = team_two_input
     print("The following team is going to win: " + results)
-def input_function_team_one(team_one_function_input):
-    if team_one_function_input == "ARI":
-        team_one_batting_input, team_one_pitching_input = teams.batting.ARI, teams.pitching.ARI
-    elif team_one_function_input == "ATL":
-        team_one_batting_input, team_one_pitching_input = teams.batting.ATL, teams.pitching.ATL
-    elif team_one_function_input == "BAL":
-        team_one_batting_input, team_one_pitching_input = teams.batting.BAL, teams.pitching.BAL
-    elif team_one_function_input == "BOS":
-        team_one_batting_input, team_one_pitching_input = teams.batting.BOS, teams.pitching.BOS
-    elif team_one_function_input == "CHC":
-        team_one_batting_input, team_one_pitching_input = teams.batting.CHC, teams.pitching.CHC
-    elif team_one_function_input == "CHW":
-        team_one_batting_input, team_one_pitching_input = teams.batting.CHW, teams.pitching.CHW
-    elif team_one_function_input == "CIN":
-        team_one_batting_input, team_one_pitching_input = teams.batting.CIN, teams.pitching.CIN
-    elif team_one_function_input == "CLE":
-        team_one_batting_input, team_one_pitching_input = teams.batting.CLE, teams.pitching.CLE
-    elif team_one_function_input == "COL":
-        team_one_batting_input, team_one_pitching_input = teams.batting.COL, teams.pitching.COL
-    elif team_one_function_input == "DET":
-        team_one_batting_input, team_one_pitching_input = teams.batting.DET, teams.pitching.DET
-    elif team_one_function_input == "HOU":
-        team_one_batting_input, team_one_pitching_input = teams.batting.HOU, teams.pitching.HOU
-    elif team_one_function_input == "KCR":
-        team_one_batting_input, team_one_pitching_input = teams.batting.KCR, teams.pitching.KCR
-    elif team_one_function_input == "LAA":
-        team_one_batting_input, team_one_pitching_input = teams.batting.LAA, teams.pitching.LAA
-    elif team_one_function_input == "LAD":
-        team_one_batting_input, team_one_pitching_input = teams.batting.LAD, teams.pitching.LAD
-    elif team_one_function_input == "MIA":
-        team_one_batting_input, team_one_pitching_input = teams.batting.MIA, teams.pitching.MIA
-    elif team_one_function_input == "MIL":
-        team_one_batting_input, team_one_pitching_input = teams.batting.MIL, teams.pitching.MIL
-    elif team_one_function_input == "MIN":
-        team_one_batting_input, team_one_pitching_input = teams.batting.MIN, teams.pitching.MIN
-    elif team_one_function_input == "NYM":
-        team_one_batting_input, team_one_pitching_input = teams.batting.NYM, teams.pitching.NYM
-    elif team_one_function_input == "NYY":
-        team_one_batting_input, team_one_pitching_input = teams.batting.NYY, teams.pitching.NYY
-    elif team_one_function_input == "OAK":
-        team_one_batting_input, team_one_pitching_input = teams.batting.OAK, teams.pitching.OAK
-    elif team_one_function_input == "PHI":
-        team_one_batting_input, team_one_pitching_input = teams.batting.PHI, teams.pitching.PHI
-    elif team_one_function_input == "PIT":
-        team_one_batting_input, team_one_pitching_input = teams.batting.PIT, teams.pitching.PIT
-    elif team_one_function_input == "SDP":
-        team_one_batting_input, team_one_pitching_input = teams.batting.SDP, teams.pitching.SDP
-    elif team_one_function_input == "SEA":
-        team_one_batting_input, team_one_pitching_input = teams.batting.SEA, teams.pitching.SEA
-    elif team_one_function_input == "SFG":
-        team_one_batting_input, team_one_pitching_input = teams.batting.SFG, teams.pitching.SFG
-    elif team_one_function_input == "STL":
-        team_one_batting_input, team_one_pitching_input = teams.batting.STL, teams.pitching.STL
-    elif team_one_function_input == "TBR":
-        team_one_batting_input, team_one_pitching_input = teams.batting.TBR, teams.pitching.TBR
-    elif team_one_function_input == "TEX":
-        team_one_batting_input, team_one_pitching_input = teams.batting.TEX, teams.pitching.TEX
-    elif team_one_function_input == "TOR":
-        team_one_batting_input, team_one_pitching_input = teams.batting.TOR, teams.pitching.TOR
-    elif team_one_function_input == "WSN":
-        team_one_batting_input, team_one_pitching_input = teams.batting.WSN, teams.pitching.WSN
-    return team_one_batting_input, team_one_pitching_input
-def input_function_team_two(team_two_function_input):
-    if team_two_function_input == "ARI":
-        team_two_batting_input, team_two_pitching_input = teams.batting.ARI, teams.pitching.ARI
-    elif team_two_function_input == "ATL":
-        team_two_batting_input, team_two_pitching_input = teams.batting.ATL, teams.pitching.ATL
-    elif team_two_function_input == "BAL":
-        team_two_batting_input, team_two_pitching_input = teams.batting.BAL, teams.pitching.BAL
-    elif team_two_function_input == "BOS":
-        team_two_batting_input, team_two_pitching_input = teams.batting.BOS, teams.pitching.BOS
-    elif team_two_function_input == "CHC":
-        team_two_batting_input, team_two_pitching_input = teams.batting.CHC, teams.pitching.CHC
-    elif team_two_function_input == "CHW":
-        team_two_batting_input, team_two_pitching_input = teams.batting.CHW, teams.pitching.CHW
-    elif team_two_function_input == "CIN":
-        team_two_batting_input, team_two_pitching_input = teams.batting.CIN, teams.pitching.CIN
-    elif team_two_function_input == "CLE":
-        team_two_batting_input, team_two_pitching_input = teams.batting.CLE, teams.pitching.CLE
-    elif team_two_function_input == "COL":
-        team_two_batting_input, team_two_pitching_input = teams.batting.COL, teams.pitching.COL
-    elif team_two_function_input == "DET":
-        team_two_batting_input, team_two_pitching_input = teams.batting.DET, teams.pitching.DET
-    elif team_two_function_input == "HOU":
-        team_two_batting_input, team_two_pitching_input = teams.batting.HOU, teams.pitching.HOU
-    elif team_two_function_input == "KCR":
-        team_two_batting_input, team_two_pitching_input = teams.batting.KCR, teams.pitching.KCR
-    elif team_two_function_input == "LAA":
-        team_two_batting_input, team_two_pitching_input = teams.batting.LAA, teams.pitching.LAA
-    elif team_two_function_input == "LAD":
-        team_two_batting_input, team_two_pitching_input = teams.batting.LAD, teams.pitching.LAD
-    elif team_two_function_input == "MIA":
-        team_two_batting_input, team_two_pitching_input = teams.batting.MIA, teams.pitching.MIA
-    elif team_two_function_input == "MIL":
-        team_two_batting_input, team_two_pitching_input = teams.batting.MIL, teams.pitching.MIL
-    elif team_two_function_input == "MIN":
-        team_two_batting_input, team_two_pitching_input = teams.batting.MIN, teams.pitching.MIN
-    elif team_two_function_input == "NYM":
-        team_two_batting_input, team_two_pitching_input = teams.batting.NYM, teams.pitching.NYM
-    elif team_two_function_input == "NYY":
-        team_two_batting_input, team_two_pitching_input = teams.batting.NYY, teams.pitching.NYY
-    elif team_two_function_input == "OAK":
-        team_two_batting_input, team_two_pitching_input = teams.batting.OAK, teams.pitching.OAK
-    elif team_two_function_input == "PHI":
-        team_two_batting_input, team_two_pitching_input = teams.batting.PHI, teams.pitching.PHI
-    elif team_two_function_input == "PIT":
-        team_two_batting_input, team_two_pitching_input = teams.batting.PIT, teams.pitching.PIT
-    elif team_two_function_input == "SDP":
-        team_two_batting_input, team_two_pitching_input = teams.batting.SDP, teams.pitching.SDP
-    elif team_two_function_input == "SEA":
-        team_two_batting_input, team_two_pitching_input = teams.batting.SEA, teams.pitching.SEA
-    elif team_two_function_input == "SFG":
-        team_two_batting_input, team_two_pitching_input = teams.batting.SFG, teams.pitching.SFG
-    elif team_two_function_input == "STL":
-        team_two_batting_input, team_two_pitching_input = teams.batting.STL, teams.pitching.STL
-    elif team_two_function_input == "TBR":
-        team_two_batting_input, team_two_pitching_input = teams.batting.TBR, teams.pitching.TBR
-    elif team_two_function_input == "TEX":
-        team_two_batting_input, team_two_pitching_input = teams.batting.TEX, teams.pitching.TEX
-    elif team_two_function_input == "TOR":
-        team_two_batting_input, team_two_pitching_input = teams.batting.TOR, teams.pitching.TOR
-    elif team_two_function_input == "WSN":
-        team_two_batting_input, team_two_pitching_input = teams.batting.WSN, teams.pitching.WSN
-    return team_two_batting_input, team_two_pitching_input
 
+# Class to collect the data from the chosen teams
+class Input_functionality:
+    def input_function_team_one(team_one_function_input):
+        for i in list(Battting_all_teams.keys()):
+            if i == team_one_function_input:
+                team_one_batting_input, team_one_pitching_input = Battting_all_teams.get(i), Pitching_all_teams.get(i)
+        return team_one_batting_input, team_one_pitching_input
+    def input_function_team_two(team_two_function_input):
+        for i in list(Battting_all_teams.keys()):
+            if i == team_two_function_input:
+                team_two_batting_input, team_two_pitching_input = Battting_all_teams.get(i), Pitching_all_teams.get(i)
+        return team_two_batting_input, team_two_pitching_input
+
+# Created a dictionary for the teams and datasets per team
+Battting_all_teams = {
+    "ARI": teams.batting.ARI,"ATL": teams.batting.ATL,"BAL": teams.batting.BAL,"BOS": teams.batting.BOS,
+    "CHC": teams.batting.CHC,"CHW": teams.batting.CHW,"CIN": teams.batting.CIN,"CLE": teams.batting.CLE,
+    "COL": teams.batting.COL,"DET": teams.batting.DET,"HOU": teams.batting.HOU,"KCR": teams.batting.KCR,
+    "LAA": teams.batting.LAA,"LAD": teams.batting.LAD,"MIA": teams.batting.MIA,"MIL": teams.batting.MIL,
+    "MIN": teams.batting.MIN,"NYM": teams.batting.NYM,"NYY": teams.batting.NYY,"OAK": teams.batting.OAK,
+    "PHI": teams.batting.PHI,"PIT": teams.batting.PIT,"SDP": teams.batting.SDP,"SEA": teams.batting.SEA,
+    "SFG": teams.batting.SFG,"STL": teams.batting.STL,"TBR": teams.batting.TBR,"TEX": teams.batting.TEX,
+    "TOR": teams.batting.TOR,"WSN": teams.batting.WSN
+}
+Pitching_all_teams = {
+    "ARI": teams.pitching.ARI,"ATL": teams.pitching.ATL,"BAL": teams.pitching.BAL,"BOS": teams.pitching.BOS,
+    "CHC": teams.pitching.CHC,"CHW": teams.pitching.CHW,"CIN": teams.pitching.CIN,"CLE": teams.pitching.CLE,
+    "COL": teams.pitching.COL,"DET": teams.pitching.DET,"HOU": teams.pitching.HOU,"KCR": teams.pitching.KCR,
+    "LAA": teams.pitching.LAA,"LAD": teams.pitching.LAD,"MIA": teams.pitching.MIA,"MIL": teams.pitching.MIL,
+    "MIN": teams.pitching.MIN,"NYM": teams.pitching.NYM,"NYY": teams.pitching.NYY,"OAK": teams.pitching.OAK,
+    "PHI": teams.pitching.PHI,"PIT": teams.pitching.PIT,"SDP": teams.pitching.SDP,"SEA": teams.pitching.SEA,
+    "SFG": teams.pitching.SFG,"STL": teams.pitching.STL,"TBR": teams.pitching.TBR,"TEX": teams.pitching.TEX,
+    "TOR": teams.pitching.TOR,"WSN": teams.pitching.WSN
+}
+
+# Input teams functionality
 print("Enter Team 1 here: ")
 team_one_input = input()
 print("Enter Team 2 here: ")
 team_two_input = input()
 
+# Normalization of the stats
 Statistics_used_for_normalization = normalized_batting_stats(Batting_df_all, Pitching_df_all)
 
-team_one_chosen_batting = input_function_team_one(team_one_input)[0]
-team_one_chosen_pitching = input_function_team_one(team_one_input)[1]
-team_two_chosen_batting = input_function_team_one(team_two_input)[0]
-team_two_chosen_pitching = input_function_team_one(team_two_input)[1]
+# Getting teams chosen data
+team_one_chosen_batting = Input_functionality.input_function_team_one(team_one_input)[0]
+team_one_chosen_pitching = Input_functionality.input_function_team_one(team_one_input)[1]
+team_two_chosen_batting = Input_functionality.input_function_team_one(team_two_input)[0]
+team_two_chosen_pitching = Input_functionality.input_function_team_one(team_two_input)[1]
 
+# Final results of the team data
+team_one_average_results = team_stats.team_one(team_one_chosen_batting, team_one_chosen_pitching)
+team_two_average_results = team_stats.team_two(team_two_chosen_batting, team_two_chosen_pitching)
 
-# This sheet is going to be used to create the offence and defence weighted averages
-# Note: change these functions to represent only dataframes as the variables -> ex. def offence(df): r_sum = np.sum(df[1])
-# This is just to optimize the code.
-
-team_one_average_results = team_one(team_one_chosen_batting, team_one_chosen_pitching)
-team_two_average_results = team_two(team_two_chosen_batting, team_two_chosen_pitching)
-
+# Comparing the final averages of the two teams
 Final_results = game_results(team_one_average_results, team_two_average_results)

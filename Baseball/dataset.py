@@ -12,16 +12,16 @@ Team_array = [
     'MIA',	'PIT'
 ]
 team_abbrev = {
-    'Arizona' : 'ARI', 'Minnesota' : 'MIN', 'Washington' : 'WSN',
-    'Philadelphia' : 'PHI',	'N.Y. Yankees' : 'NYY',	'Oakland' : 'OAK',
-    'San Francisco' : 'SFG', 'Tampa Bay' : 'TBR', 'L.A. Angels' : 'LAA',
-    'Detroit' : 'DET', 'St. Louis' : 'STL', 'Chi. Cubs' : 'CHC',
-    'Atlanta' : 'ATL',	'Houston' : 'HOU', 'Cincinnati' : 'CIN',
-    'N.Y. Mets' : 'NYM', 'Boston' : 'BOS', 'Pittsburgh' : 'PIT',
-    'Miami' : 'MIA', 'Baltimore' : 'BAL', 'Toronto' : 'TOR',
-    'Cleveland' : 'CLE', 'Chi. White Sox' : 'CHW', 'Texas' : 'TEX',
-    'Kansas City' : 'KCR', 'Milwaukee' : 'MIL',	'Colorado' : 'COL',
-    'San Diego' : 'SDG', 'Seattle' : 'SEA', 'L.A. Dodgers' : 'LAD'
+    'Arizona':'ARI', 'Minnesota':'MIN', 'Washington':'WSN',
+    'Philadelphia':'PHI', 'N.Y. Yankees':'NYY', 'Oakland':'OAK',
+    'San Francisco':'SFG', 'Tampa Bay':'TBR', 'L.A. Angels' : 'LAA',
+    'Detroit':'DET', 'St. Louis':'STL', 'Chi. Cubs':'CHC',
+    'Atlanta':'ATL', 'Houston':'HOU', 'Cincinnati':'CIN',
+    'N.Y. Mets':'NYM', 'Boston':'BOS', 'Pittsburgh':'PIT',
+    'Miami':'MIA', 'Baltimore':'BAL', 'Toronto':'TOR',
+    'Cleveland':'CLE', 'Chi. White Sox':'CHW', 'Texas':'TEX',
+    'Kansas City':'KCR', 'Milwaukee':'MIL', 'Colorado':'COL',
+    'San Diego':'SDG', 'Seattle':'SEA', 'L.A. Dodgers':'LAD'
 }
 
 class offence_defence:
