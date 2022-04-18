@@ -110,18 +110,18 @@ def game_results(team_one_average_results, team_two_average_results):
 # Class to collect the data from the chosen teams
 class Input_functionality:
     def input_function_team_one(team_one_function_input):
-        for i in list(Battting_all_teams.keys()):
+        for i in list(Batting_all_teams.keys()):
             if i == team_one_function_input:
-                team_one_batting_input, team_one_pitching_input = Battting_all_teams.get(i), Pitching_all_teams.get(i)
+                team_one_batting_input, team_one_pitching_input = Batting_all_teams.get(i), Pitching_all_teams.get(i)
         return team_one_batting_input, team_one_pitching_input
     def input_function_team_two(team_two_function_input):
-        for i in list(Battting_all_teams.keys()):
+        for i in list(Batting_all_teams.keys()):
             if i == team_two_function_input:
-                team_two_batting_input, team_two_pitching_input = Battting_all_teams.get(i), Pitching_all_teams.get(i)
+                team_two_batting_input, team_two_pitching_input = Batting_all_teams.get(i), Pitching_all_teams.get(i)
         return team_two_batting_input, team_two_pitching_input
 
 # Created a dictionary for the teams and datasets per team
-Battting_all_teams = {
+Batting_all_teams = {
     "ARI": teams.batting.ARI,"ATL": teams.batting.ATL,"BAL": teams.batting.BAL,"BOS": teams.batting.BOS,
     "CHC": teams.batting.CHC,"CHW": teams.batting.CHW,"CIN": teams.batting.CIN,"CLE": teams.batting.CLE,
     "COL": teams.batting.COL,"DET": teams.batting.DET,"HOU": teams.batting.HOU,"KCR": teams.batting.KCR,
