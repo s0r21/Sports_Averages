@@ -32,6 +32,7 @@ class dataframe_manipulation:
         for i in list(dictionary.keys()):
             df = pd.concat(dictionary.get(i))
             return df
+
 def webscrape_function(team_name, season_year):
     df = pd.read_html('https://www.hockey-reference.com/teams/' + team_name + '/' + season_year + '.html')
     return df
