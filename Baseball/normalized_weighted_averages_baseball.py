@@ -99,6 +99,8 @@ class team_stats:
                          (0.05*(HR_sum_pitching)) + (0.05*(BB_sum_pitching)) - (0.45*(So_sum_pitching))
         team_two_average = batting_final - pitching_final
         return team_two_average
+    def team_difference(team_one_average, team_two_average):
+        return(abs(team_one_average - team_two_average))
 
 # Function to tell me who is going to win based on average comparison
 def game_results(team_one_average_results, team_two_average_results):
@@ -106,6 +108,7 @@ def game_results(team_one_average_results, team_two_average_results):
         results = team_one_input
     else: results = team_two_input
     print("The following team is going to win: " + results)
+    print("Team has an Avg. advantage of: ", team_stats.team_difference(team_one_average_results, team_two_average_results))
 
 # Class to collect the data from the chosen teams
 class Input_functionality:
@@ -163,3 +166,4 @@ team_two_average_results = team_stats.team_two(team_two_chosen_batting, team_two
 
 # Comparing the final averages of the two teams
 Final_results = game_results(team_one_average_results, team_two_average_results)
+
