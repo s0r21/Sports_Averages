@@ -15,9 +15,14 @@ class models:
                                 trend=True, with_intercept=True)
         return model
     def model_predict_results(team_array_position):
-        model_prediction = (models.model_results(team_array_position).predict(n_periods=1)) * \
-                           teams_datasets.get(team_array[team_array_position]).iloc[
-                               max(teams_datasets.get(team_array[team_array_position]).index)]
+        if (models.model_results(team_array_position).predict(n_periods=1)) > 0:
+            model_prediction = teams_datasets.get(team_array[team_array_position]).iloc[
+                                   max(teams_datasets.get(team_array[team_array_position]).index)] * \
+                               (1 + models.model_results(team_array_position).predict(n_periods=1))
+        elif (models.model_results(team_array_position).predict(n_periods=1)) < 0:
+            model_prediction = teams_datasets.get(team_array[team_array_position]).iloc[
+                max(teams_datasets.get(team_array[team_array_position]).index)] / \
+                               (1 + models.model_results(team_array_position).predict(n_periods=1))
         return model_prediction
 
 class input_functionality:
