@@ -1,5 +1,6 @@
 # This script is to import the data
-from packages import pd
+from packages import *
+
 year_selected = '2022' # Note: Make sure too adjust this as the new season starts.
 Team_array = [
     'ARI',	'TBR',	'HOU',	'NYY',
@@ -46,7 +47,8 @@ class offence_defence:
         return pitching_Df
 
 class todays_games:
-    link_to_todays_games = pd.read_html('https://www.cbssports.com/mlb/schedule/')
+    todays_date = date.today().strftime("%Y%m%d")
+    link_to_todays_games = pd.read_html('https://www.cbssports.com/mlb/schedule/' + todays_date)
     @staticmethod
     def home_teams():
         todays_home_teams_df = todays_games.link_to_todays_games[0]['Home'].map(team_abbrev)
