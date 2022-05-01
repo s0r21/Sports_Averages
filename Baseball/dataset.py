@@ -242,3 +242,4 @@ class teams:
 
 todays_home_teams_df = todays_games.home_teams()
 todays_away_teams_df = todays_games.away_teams()
+todays_teams = todays_games.home_teams().to_frame().join(todays_games.away_teams())

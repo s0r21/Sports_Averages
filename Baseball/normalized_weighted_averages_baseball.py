@@ -1,4 +1,7 @@
 # The weighted average formulas for the game of baseball
+import numpy as np
+import pandas as pd
+
 from dataset import *
 
 # Concatenating all the datasets into one
@@ -102,14 +105,6 @@ class team_stats:
     def team_difference(team_one_average, team_two_average):
         return(abs(team_one_average - team_two_average))
 
-# Function to tell me who is going to win based on average comparison
-def game_results(team_one_average_results, team_two_average_results):
-    if team_one_average_results > team_two_average_results:
-        results = team_one_input
-    else: results = team_two_input
-    print("The following team is going to win: " + results)
-    print("Team has an Avg. advantage of: ", team_stats.team_difference(team_one_average_results, team_two_average_results))
-
 # Class to collect the data from the chosen teams
 class Input_functionality:
     def input_function_team_one(team_one_function_input):
@@ -123,6 +118,66 @@ class Input_functionality:
                 team_two_batting_input, team_two_pitching_input = Batting_all_teams.get(i), Pitching_all_teams.get(i)
         return team_two_batting_input, team_two_pitching_input
 
+class automated_method:
+    @staticmethod
+    def automated_function_away_team():
+        away_team_array = []
+        for i in list(todays_away_teams_df.index):
+            for x in list(todays_away_teams_df):
+                if list(todays_away_teams_df.index)[i] == list(todays_home_teams_df.index)[i]:
+                    away_team_array.append(team_stats.team_two(Batting_all_teams.get(x), Pitching_all_teams.get(x)))
+        return away_team_array[0:max(list(todays_away_teams_df.index))+1]
+    @staticmethod
+    def automated_function_home_team():
+        home_team_array = []
+        for i in list(todays_home_teams_df.index):
+            for x in list(todays_home_teams_df):
+                if list(todays_home_teams_df.index)[i] == list(todays_away_teams_df.index)[i]:
+                    home_team_array.append(team_stats.team_one(Batting_all_teams.get(x), Pitching_all_teams.get(x)))
+        return home_team_array[0:max(list(todays_home_teams_df.index))+1]
+    @staticmethod
+    def final_data_frame_automated():
+        column_names = ['Away_Team', 'Home_Team', 'Away_Avg', 'Home_Avg']
+        score_df = pd.DataFrame(np.transpose([todays_away_teams_df, todays_home_teams_df,
+                                              automated_method.automated_function_away_team(),
+                                              automated_method.automated_function_home_team()]),
+                                columns=column_names)
+        score_df['{1: Away, 0: Home}'] = (score_df['Home_Avg'] < score_df['Away_Avg'])
+        score_df['{1: Away, 0: Home}'] = score_df['{1: Away, 0: Home}'].astype(int)
+        score_df['Difference'] = team_stats.team_difference(score_df['Home_Avg'], score_df['Away_Avg'])
+        score_df.drop(['Away_Avg', 'Home_Avg'], axis=1, inplace=True)
+        return score_df
+
+class manual_input:
+    # Manual Input Function
+    @staticmethod
+    def input_team_one():
+        team_one_input = input("Enter Team 1 here: ")
+        return team_one_input
+    @staticmethod
+    def input_team_two():
+        team_two_input = input("Enter Team 2 here: ")
+        return team_two_input
+    @staticmethod
+    def manual_input_function():
+        team_one_chosen_batting = Input_functionality.input_function_team_one(manual_input.input_team_one())[0]
+        team_one_chosen_pitching = Input_functionality.input_function_team_one(manual_input.input_team_one())[1]
+        team_two_chosen_batting = Input_functionality.input_function_team_one(manual_input.input_team_two())[0]
+        team_two_chosen_pitching = Input_functionality.input_function_team_one(manual_input.input_team_two())[1]
+        team_one_average_results = team_stats.team_one(team_one_chosen_batting, team_one_chosen_pitching)
+        team_two_average_results = team_stats.team_two(team_two_chosen_batting, team_two_chosen_pitching)
+        Final_results = manual_input.game_results(team_one_average_results, team_two_average_results)
+        return Final_results
+    # Function to tell me who is going to win based on average comparison
+    def game_results(team_one_average_results, team_two_average_results):
+        if team_one_average_results > team_two_average_results:
+            results = manual_input.input_team_one()
+        else:
+            results = manual_input.input_team_two()
+        print("The following team is going to win: " + results)
+        print("Team has an Avg. advantage of: ",
+              team_stats.team_difference(team_one_average_results, team_two_average_results))
+
 # Created a dictionary for the teams and datasets per team
 Batting_all_teams = {
     "ARI": teams.batting.ARI,"ATL": teams.batting.ATL,"BAL": teams.batting.BAL,"BOS": teams.batting.BOS,
@@ -134,6 +189,7 @@ Batting_all_teams = {
     "SFG": teams.batting.SFG,"STL": teams.batting.STL,"TBR": teams.batting.TBR,"TEX": teams.batting.TEX,
     "TOR": teams.batting.TOR,"WSN": teams.batting.WSN
 }
+
 Pitching_all_teams = {
     "ARI": teams.pitching.ARI,"ATL": teams.pitching.ATL,"BAL": teams.pitching.BAL,"BOS": teams.pitching.BOS,
     "CHC": teams.pitching.CHC,"CHW": teams.pitching.CHW,"CIN": teams.pitching.CIN,"CLE": teams.pitching.CLE,
@@ -145,25 +201,9 @@ Pitching_all_teams = {
     "TOR": teams.pitching.TOR,"WSN": teams.pitching.WSN
 }
 
-# Input teams functionality
-print("Enter Team 1 here: ")
-team_one_input = input()
-print("Enter Team 2 here: ")
-team_two_input = input()
-
 # Normalization of the stats
 Statistics_used_for_normalization = normalized_batting_stats(Batting_df_all, Pitching_df_all)
 
-# Getting teams chosen data
-team_one_chosen_batting = Input_functionality.input_function_team_one(team_one_input)[0]
-team_one_chosen_pitching = Input_functionality.input_function_team_one(team_one_input)[1]
-team_two_chosen_batting = Input_functionality.input_function_team_one(team_two_input)[0]
-team_two_chosen_pitching = Input_functionality.input_function_team_one(team_two_input)[1]
-
-# Final results of the team data
-team_one_average_results = team_stats.team_one(team_one_chosen_batting, team_one_chosen_pitching)
-team_two_average_results = team_stats.team_two(team_two_chosen_batting, team_two_chosen_pitching)
-
-# Comparing the final averages of the two teams
-Final_results = game_results(team_one_average_results, team_two_average_results)
-
+Final_dataframe = automated_method.final_data_frame_automated()
+Final_dataframe.to_excel('C:/Users/t0ys0r/OneDrive\Desktop/Degenerate Behaviour/Baseball/Todays_Games.xlsx',
+                  sheet_name='Todays_Games')
