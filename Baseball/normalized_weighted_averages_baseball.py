@@ -1,8 +1,6 @@
 # The weighted average formulas for the game of baseball
-import numpy as np
-import pandas as pd
-
 from dataset import *
+from packages import *
 
 # Concatenating all the datasets into one
 Batting_df_all = pd.concat([teams.batting.ARI, teams.batting.ATL, teams.batting.BAL, teams.batting.BOS,

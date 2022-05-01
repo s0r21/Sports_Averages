@@ -21,7 +21,7 @@ team_abbrev = {
     'Miami':'MIA', 'Baltimore':'BAL', 'Toronto':'TOR',
     'Cleveland':'CLE', 'Chi. White Sox':'CHW', 'Texas':'TEX',
     'Kansas City':'KCR', 'Milwaukee':'MIL', 'Colorado':'COL',
-    'San Diego':'SDG', 'Seattle':'SEA', 'L.A. Dodgers':'LAD'
+    'San Diego':'SDP', 'Seattle':'SEA', 'L.A. Dodgers':'LAD'
 }
 
 class offence_defence:
@@ -242,4 +242,3 @@ class teams:
 
 todays_home_teams_df = todays_games.home_teams()
 todays_away_teams_df = todays_games.away_teams()
-todays_teams = todays_games.home_teams().to_frame().join(todays_games.away_teams())
