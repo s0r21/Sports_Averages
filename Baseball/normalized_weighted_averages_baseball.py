@@ -203,7 +203,7 @@ Pitching_all_teams = {
 Statistics_used_for_normalization = normalized_batting_stats(Batting_df_all, Pitching_df_all)
 
 Final_dataframe = automated_method.final_data_frame_automated()
-file_name = create_directory('Output', 'Todays_games.xlsx')
+file_name = create_directory('Output', 'todays_baseball_games.xlsx')
 Final_dataframe.to_excel(file_name)
 
 

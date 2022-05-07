@@ -47,5 +47,5 @@ class automated_method:
         return score_df
 
 Final_dataframe = automated_method.final_data_frame_automated()
-file_name = create_directory('Output', 'todays_games.xlsx')
+file_name = create_directory('Output', 'todays_hockey_games.xlsx')
 Final_dataframe.to_excel(file_name)
