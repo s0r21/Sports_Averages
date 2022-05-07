@@ -96,7 +96,7 @@ team_abbrev = {
 }
 
 class todays_games:
-    todays_date = '20220115' # date.today().strftime("%Y%m%d")
+    todays_date = date.today().strftime("%Y%m%d")
     link_to_todays_games = pd.read_html('https://www.cbssports.com/nhl/schedule/' + todays_date)
     @staticmethod
     def home_teams():
