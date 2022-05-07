@@ -1,4 +1,4 @@
-from packages import pd, np
+from utils import *
 
 # Injury Table
 Injury = pd.read_html('https://www.basketball-reference.com/friv/injuries.fcgi#injuries')

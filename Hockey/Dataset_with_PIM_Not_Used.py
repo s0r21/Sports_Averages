@@ -1,5 +1,4 @@
-
-from packages import pd, np
+from utils import *
 
 def offence_function(shots, goals, assists, penalties_in_minutes, faceoff_wins, faceoff_loses):
     offence = 0.5 * (np.sum((shots - goals))) + 0.2 * (np.sum(assists)) + 0.2 * ( np.sum(faceoff_wins) - np.sum(faceoff_loses) ) -\

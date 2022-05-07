@@ -1,6 +1,6 @@
 # The weighted average formulas for the game of baseball
 from dataset import *
-from packages import *
+from utils import *
 
 # Concatenating all the datasets into one
 Batting_df_all = pd.concat([teams.batting.ARI, teams.batting.ATL, teams.batting.BAL, teams.batting.BOS,
@@ -203,5 +203,7 @@ Pitching_all_teams = {
 Statistics_used_for_normalization = normalized_batting_stats(Batting_df_all, Pitching_df_all)
 
 Final_dataframe = automated_method.final_data_frame_automated()
-Final_dataframe.to_excel('C:/Users/t0ys0r/OneDrive\Desktop/Degenerate Behaviour/Baseball/Todays_Games.xlsx',
-                  sheet_name='Todays_Games')
+file_name = create_directory('Output', 'Todays_games.xlsx')
+Final_dataframe.to_excel(file_name)
+
+

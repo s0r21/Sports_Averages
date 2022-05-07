@@ -1,7 +1,6 @@
 # The Main Script File to analyze each team and provide the results of who will win
-
 from dataset import teams_normalized_datasets, teams_datasets, team_array
-from packages import *
+from utils import *
 
 print("Enter Team 1 here: ")
 team_one_input = input()

@@ -1,5 +1,5 @@
 # This script is to import the data
-from packages import *
+from utils import *
 
 year_selected = '2022' # Note: Make sure too adjust this as the new season starts.
 Team_array = [

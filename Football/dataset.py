@@ -1,6 +1,6 @@
 # This page is to create the dataset needed to predict football (american) games.
 
-from packages import pd, np
+from utils import *
 
 team_array_for_website = ['CRD', 'ATL', 'BUF', 'MIA', 'NWE',
                           'NYJ', 'OTI', 'CLT', 'HTX', 'JAX',
@@ -48,7 +48,6 @@ def normalization(df):
     normalized_values = normalized_values.dropna()
     normalized_values = normalized_values.replace([np.inf, -np.inf], 0)
     return normalized_values
-
 
 teams_datasets = {
     'ARI': webscrape_data_manipulation_function(0),
