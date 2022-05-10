@@ -1,4 +1,6 @@
 # The weighted average formulas for the game of baseball
+import numpy as np
+
 from dataset import *
 from utils import *
 
@@ -100,8 +102,10 @@ class team_stats:
                          (0.05*(HR_sum_pitching)) + (0.05*(BB_sum_pitching)) - (0.45*(So_sum_pitching))
         team_two_average = batting_final - pitching_final
         return team_two_average
-    def team_difference(team_one_average, team_two_average):
-        return(abs(team_one_average - team_two_average))
+    def home_team_difference(team_one_average, team_two_average):
+        return(abs(team_one_average / team_two_average))
+    def away_team_difference(team_one_average, team_two_average):
+        return(abs(team_two_average / team_one_average))
 
 # Class to collect the data from the chosen teams
 class Input_functionality:
@@ -142,7 +146,10 @@ class automated_method:
                                 columns=column_names)
         score_df['{1: Away, 0: Home}'] = (score_df['Home_Avg'] < score_df['Away_Avg'])
         score_df['{1: Away, 0: Home}'] = score_df['{1: Away, 0: Home}'].astype(int)
-        score_df['Difference'] = team_stats.team_difference(score_df['Home_Avg'], score_df['Away_Avg'])
+        score_df.loc[score_df['{1: Away, 0: Home}'] == 1, 'Difference'] = team_stats.away_team_difference(
+            score_df['Home_Avg'], score_df['Away_Avg'])
+        score_df.loc[score_df['{1: Away, 0: Home}'] == 0, 'Difference'] = team_stats.home_team_difference(
+            score_df['Home_Avg'], score_df['Away_Avg'])
         score_df.drop(['Away_Avg', 'Home_Avg'], axis=1, inplace=True)
         return score_df
 
