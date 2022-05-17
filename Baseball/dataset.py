@@ -30,8 +30,8 @@ class offence_defence:
         Link = 'https://www.baseball-reference.com/teams/' + team + '/' + season_year + '.shtml#team_batting'
         return Link
     def batting_df(web_link):
-        batting_link = pd.read_html(web_link)
-        batting_Df = pd.DataFrame(batting_link[(len(batting_link) - 2)])
+        batting_Link = pd.read_html(web_link)
+        batting_Df = pd.DataFrame(batting_Link[(len(batting_Link) - 2)])
         batting_Df = batting_Df.loc[0:len(batting_Df), ['R', 'H', '2B', '3B', 'RBI', 'SB']]
         batting_Df = batting_Df.drop(labels=range(21, len(batting_Df)),
                                      axis=0)
@@ -39,8 +39,8 @@ class offence_defence:
         batting_Df = batting_Df.dropna()
         return batting_Df
     def pitching_df(web_link):
-        pitching_link = pd.read_html(web_link)
-        pitching_Df = pd.DataFrame(pitching_link[(len(pitching_link) - 1)])
+        pitching_Link = pd.read_html(web_link)
+        pitching_Df = pd.DataFrame(pitching_Link[(len(pitching_Link) - 1)])
         pitching_Df = pitching_Df.loc[0:len(pitching_Df), ['R', 'H', 'ER', 'HR', 'BB', 'SO']]
         pitching_Df = pitching_Df.drop(labels=range(21, len(pitching_Df)),
                                        axis=0)
