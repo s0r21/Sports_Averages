@@ -7,6 +7,7 @@ def create_directory(directory_name, file_name):
         os.mkdir(path)
     return(filename)
 
+# Loading the packages in the project
 import pandas as pd
 import numpy as np
 import openpyxl
