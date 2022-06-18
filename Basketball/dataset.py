@@ -108,7 +108,7 @@ class offence_defence_functions:
 class webscrape_functions:
     todays_date = date.today().strftime("%Y%m%d")
     random_date_for_testing = '20211013'
-    Schedule = pd.read_html('https://www.cbssports.com/nba/scoreboard/' + random_date_for_testing + '/')
+    Schedule = pd.read_html('https://www.cbssports.com/nba/scoreboard/' + todays_date + '/')
     Schedule.pop(15)
     def webscrape_dataset_function(team_array, season_year):
         df = pd.read_html(
