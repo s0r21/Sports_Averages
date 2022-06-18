@@ -2,14 +2,6 @@
 from utils import *
 from dataset import team_final_result
 
-# Directory & File Name Function
-def create_directory(directory_name, xlsx_name):
-    dirname = os.path.dirname(__file__)
-    path = os.path.join(dirname, directory_name)
-    filename = os.path.join(path, xlsx_name + '.xlsx')
-    if not os.path.exists(path):
-        os.mkdir(path)
-    return(filename)
 
 print("Enter Team 1 here: ")
 team_one_input = input()
