@@ -9,7 +9,6 @@ Injury_array = np.array(Injury_df['Player']).astype(str)
 
 # CBS Schedule
 
-
 class parameters:
     season_year = '2022'
     team_array = [
@@ -30,6 +29,38 @@ class parameters:
         'STL', 'BLK', 'DRB',
         'PF', 'TOV'
     ]
+    team_name_abbrevations = {
+    'Celtics':'BOS',
+    'Nets':'BRK',
+    'Raptors':'TOR',
+    '76ers':'PHI',
+    'Knicks':'NYK',
+    'Timberwolves':'MIN',
+    'Thunder':'OKC',
+    'Nuggets':'DEN',
+    'Trail Blazers':'POR',
+    'Jazz':'UTA',
+    'Bulls':'CHI',
+    'Cavaliers':'CLE',
+    'Pistons':'DET',
+    'Pacers':'IND',
+    'Bucks':'MIL',
+    'Lakers':'LAL',
+    'Clippers':'LAC',
+    'Warriors':'GSW',
+    'Suns':'PHO',
+    'Kings':'SAC',
+    'Wizards':'WAS',
+    'Hawks':'ATL',
+    'Magic':'ORL',
+    'Heat':'MIA',
+    'Hornets':'CHO',
+    'Grizzlies':'MEM',
+    'Pelicans':'NOP',
+    'Rockets':'HOU',
+    'Spurs':'SAS',
+    'Mavericks':'DAL'
+    }
 class offence_defence_functions:
     @staticmethod
     def offence_dataset(df):
@@ -103,8 +134,8 @@ class webscrape_functions:
             todays_scheduled_teams_df['Away'].str[:-3]).reset_index(drop=True)
         todays_scheduled_teams_df_home_no_numbers = pd.DataFrame(
             todays_scheduled_teams_df['Home'].str[:-3]).reset_index(drop=True)
-        final_schedule_df = pd.merge(todays_scheduled_teams_df_away_no_numbers,
-                                     todays_scheduled_teams_df_home_no_numbers,
+        final_schedule_df = pd.merge(todays_scheduled_teams_df_away_no_numbers['Away'].map(parameters.team_name_abbrevations),
+                                     todays_scheduled_teams_df_home_no_numbers['Home'].map(parameters.team_name_abbrevations),
                                      left_index=True, right_index=True)
         return final_schedule_df
 
@@ -117,128 +148,131 @@ def injury_function(dataset):
     dataset.dropna(subset=[('Unnamed: 1')], inplace = True)
     return dataset
 
+todays_away_teams_df = webscrape_functions.concat_schedule_teams()['Away']
+todays_home_teams_df = webscrape_functions.concat_schedule_teams()['Home']
+
 team_dataset_offence = {
-    'BOS': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'BOS': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[0],season_year=parameters.season_year)),
-    'BRK': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'BRK': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[1],season_year=parameters.season_year)),
-    'TOR': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'TOR': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[2],season_year=parameters.season_year)),
-    'PHI': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'PHI': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[3],season_year=parameters.season_year)),
-    'NYK': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'NYK': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[4],season_year=parameters.season_year)),
-    'MIN': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'MIN': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[5],season_year=parameters.season_year)),
-    'OKC': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'OKC': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[6],season_year=parameters.season_year)),
-    'DEN': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'DEN': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[7],season_year=parameters.season_year)),
-    'POR': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'POR': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[8],season_year=parameters.season_year)),
-    'UTA': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'UTA': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[9],season_year=parameters.season_year)),
-    'CHI': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'CHI': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[10],season_year=parameters.season_year)),
-    'CLE': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'CLE': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[11],season_year=parameters.season_year)),
-    'DET': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'DET': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[12],season_year=parameters.season_year)),
-    'IND': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'IND': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[13],season_year=parameters.season_year)),
-    'MIL': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'MIL': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[14],season_year=parameters.season_year)),
-    'LAL': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'LAL': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[15],season_year=parameters.season_year)),
-    'LAC': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'LAC': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[16],season_year=parameters.season_year)),
-    'GSW': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'GSW': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[17],season_year=parameters.season_year)),
-    'PHO': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'PHO': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[18],season_year=parameters.season_year)),
-    'SAC': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'SAC': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[19],season_year=parameters.season_year)),
-    'WAS': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'WAS': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[20],season_year=parameters.season_year)),
-    'ATL': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'ATL': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[21],season_year=parameters.season_year)),
-    'ORL': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'ORL': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[22],season_year=parameters.season_year)),
-    'MIA': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'MIA': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[23],season_year=parameters.season_year)),
-    'CHO': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'CHO': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[24],season_year=parameters.season_year)),
-    'MEM': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'MEM': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[25],season_year=parameters.season_year)),
-    'NOP': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'NOP': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[26],season_year=parameters.season_year)),
-    'HOU': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'HOU': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[27],season_year=parameters.season_year)),
-    'SAS': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'SAS': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[28],season_year=parameters.season_year)),
-    'DAL': offence_defence_functions.offence_dataset(webscrape_dataset_function(
+    'DAL': offence_defence_functions.offence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[29],season_year=parameters.season_year))
 }
 team_dataset_defence = {
-    'BOS': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'BOS': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[0],season_year=parameters.season_year)),
-    'BRK': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'BRK': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[1],season_year=parameters.season_year)),
-    'TOR': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'TOR': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[2],season_year=parameters.season_year)),
-    'PHI': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'PHI': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[3],season_year=parameters.season_year)),
-    'NYK': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'NYK': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[4],season_year=parameters.season_year)),
-    'MIN': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'MIN': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[5],season_year=parameters.season_year)),
-    'OKC': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'OKC': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[6],season_year=parameters.season_year)),
-    'DEN': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'DEN': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[7],season_year=parameters.season_year)),
-    'POR': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'POR': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[8],season_year=parameters.season_year)),
-    'UTA': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'UTA': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[9],season_year=parameters.season_year)),
-    'CHI': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'CHI': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[10],season_year=parameters.season_year)),
-    'CLE': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'CLE': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[11],season_year=parameters.season_year)),
-    'DET': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'DET': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[12],season_year=parameters.season_year)),
-    'IND': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'IND': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[13],season_year=parameters.season_year)),
-    'MIL': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'MIL': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[14],season_year=parameters.season_year)),
-    'LAL': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'LAL': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[15],season_year=parameters.season_year)),
-    'LAC': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'LAC': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[16],season_year=parameters.season_year)),
-    'GSW': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'GSW': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[17],season_year=parameters.season_year)),
-    'PHO': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'PHO': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[18],season_year=parameters.season_year)),
-    'SAC': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'SAC': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[19],season_year=parameters.season_year)),
-    'WAS': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'WAS': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[20],season_year=parameters.season_year)),
-    'ATL': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'ATL': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[21],season_year=parameters.season_year)),
-    'ORL': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'ORL': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[22],season_year=parameters.season_year)),
-    'MIA': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'MIA': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[23],season_year=parameters.season_year)),
-    'CHO': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'CHO': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[24],season_year=parameters.season_year)),
-    'MEM': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'MEM': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[25],season_year=parameters.season_year)),
-    'NOP': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'NOP': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[26],season_year=parameters.season_year)),
-    'HOU': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'HOU': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[27],season_year=parameters.season_year)),
-    'SAS': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'SAS': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[28],season_year=parameters.season_year)),
-    'DAL': offence_defence_functions.defence_dataset(webscrape_dataset_function(
+    'DAL': offence_defence_functions.defence_dataset(webscrape_functions.webscrape_dataset_function(
         parameters.team_array[29],season_year=parameters.season_year))
 }
 team_final_result = {
