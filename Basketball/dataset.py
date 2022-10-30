@@ -61,6 +61,7 @@ class parameters:
     'Spurs':'SAS',
     'Mavericks':'DAL'
     }
+
 class offence_defence_functions:
     @staticmethod
     def offence_dataset(df):
@@ -109,7 +110,7 @@ class webscrape_functions:
     todays_date = date.today().strftime("%Y%m%d")
     random_date_for_testing = '20211013'
     Schedule = pd.read_html('https://www.cbssports.com/nba/scoreboard/' + todays_date + '/')
-    Schedule.pop(15)
+#   Schedule.pop(len(Schedule)-1)
     def webscrape_dataset_function(team_array, season_year):
         df = pd.read_html(
             'https://www.basketball-reference.com/teams/' + team_array + '/' + season_year + '.html#advanced')
@@ -124,7 +125,7 @@ class webscrape_functions:
         todays_scheduled_teams = list()
         append_scheduled_teams = list()
         for i in range(0, len(webscrape_functions.Schedule)):
-            if i % 3 == 0:
+            if i % 1 == 0:
                 todays_scheduled_teams.append(webscrape_functions.Schedule[i])
         for k in range(0, len(todays_scheduled_teams)):
             append_scheduled_teams.append(todays_scheduled_teams[k].T.iloc[0])
