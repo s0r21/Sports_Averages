@@ -11,7 +11,10 @@ def create_directory(directory_name, file_name):
 import pandas as pd
 import numpy as np
 import openpyxl
+import time
 from datetime import date
 import os
+t = 3 # this is for the time delay for rate limiter. Basically, stating that it's going to wait 3 seconds
+    # seconds before running the next line
 # import matplotlib
 # import pmdarima.arima as arma

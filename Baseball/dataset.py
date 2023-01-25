@@ -28,6 +28,7 @@ team_abbrev = {
 class offence_defence:
     def webscrape_link(team, season_year):
         Link = 'https://www.baseball-reference.com/teams/' + team + '/' + season_year + '.shtml#team_batting'
+        time.sleep(t)
         return Link
     def batting_df(web_link):
         batting_Link = pd.read_html(web_link)
@@ -37,6 +38,7 @@ class offence_defence:
                                      axis=0)
         batting_Df = batting_Df.loc[(batting_Df['R'] != 'R')]
         batting_Df = batting_Df.dropna()
+        time.sleep(t)
         return batting_Df
     def pitching_df(web_link):
         pitching_Link = pd.read_html(web_link)
@@ -46,6 +48,7 @@ class offence_defence:
                                        axis=0)
         pitching_Df = pitching_Df.loc[(pitching_Df['H'] != 'H')]
         pitching_Df = pitching_Df.dropna()
+        time.sleep(t)
         return pitching_Df
 
 class todays_games:

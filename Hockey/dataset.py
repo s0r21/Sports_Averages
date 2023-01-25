@@ -1,21 +1,15 @@
 from utils import *
 
 # Directory & File Name Function
-def create_directory(directory_name, xlsx_name):
-    dirname = os.path.dirname(__file__)
-    path = os.path.join(dirname, directory_name)
-    filename = os.path.join(path, xlsx_name + '.xlsx')
-    if not os.path.exists(path):
-        os.mkdir(path)
-    return(filename)
-
 class position_functions:
     def offence_function(df):
         offence = 0.65 * (np.sum(df.loc[0]) + 0.35 * (np.sum(df.loc[1])))
+        time_delay
         return offence
 
     def defence_function(df):
         defence = 0.35 * (np.sum(df.loc[0])) + 0.25 * (np.sum(df.loc[1])) + 0.4 * (np.sum(df.loc[2]))
+        time_delay
         return defence
 
     def goalie_function(df):
@@ -25,6 +19,7 @@ class dataframe_manipulation:
     def offence_dataframe(df, offence_defence_table_number):
         team_df = df[offence_defence_table_number].loc[:len(df[offence_defence_table_number]).__index__()-1,
                   [('Scoring', 'G'), ('Unnamed: 17_level_0', 'S')]]
+        time_delay
         return team_df
 
     def defence_dataframe(df, offence_defence_table_number):
@@ -35,19 +30,23 @@ class dataframe_manipulation:
         team_defence_df['Unnamed: 26_level_0', 'XXX'] = team_defence_df['Unnamed: 26_level_0', 'FOW'] -\
                                                         team_defence_df['Unnamed: 27_level_0', 'FOL']
         team_defence_df.drop(columns=[('Unnamed: 26_level_0', 'FOW'), ('Unnamed: 27_level_0', 'FOL')])
+        time_delay
         return team_defence_df
 
     def goalie_dataframe(df, goalie_table_number):
         team_goalie_df = df[goalie_table_number].loc[0:2, [('Goalie Stats', 'GA')]]
+        time_delay
         return team_goalie_df
 
     def concat_teams(dictionary):
         for i in list(dictionary.keys()):
             df = pd.concat(dictionary.get(i))
+            time_delay
             return df
 
 def webscrape_function(team_name, season_year):
     df = pd.read_html('https://www.hockey-reference.com/teams/' + team_name + '/' + season_year + '.html')
+    time.sleep(t)
     return df
 def normalization_function(df):
     normalized_value = ( df - pd.DataFrame.mean(df) ) / pd.DataFrame.std(df)

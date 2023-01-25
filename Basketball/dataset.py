@@ -4,6 +4,7 @@ from utils import *
 
 # Injury Table
 Injury = pd.read_html('https://www.basketball-reference.com/friv/injuries.fcgi#injuries')
+time.sleep(t)
 Injury_df = pd.DataFrame(Injury[0])
 Injury_array = np.array(Injury_df['Player']).astype(str)
 
@@ -119,15 +120,18 @@ class webscrape_functions:
         df = injury_function(df)
         df = df.loc[0:12, ['FG', '3P', '3PA', '2P', '2PA', 'FT', 'FTA', 'ORB',
                            'DRB', 'STL', 'BLK', 'PF', 'TOV']].fillna(0)
+        time.sleep(t)
         return df
     @staticmethod
     def concat_schedule_teams():
         todays_scheduled_teams = list()
         append_scheduled_teams = list()
         for i in range(0, len(webscrape_functions.Schedule)):
+            time.sleep(t)
             if i % 1 == 0:
                 todays_scheduled_teams.append(webscrape_functions.Schedule[i])
         for k in range(0, len(todays_scheduled_teams)):
+            time.sleep(t)
             append_scheduled_teams.append(todays_scheduled_teams[k].T.iloc[0])
         todays_scheduled_teams_df = pd.DataFrame(append_scheduled_teams)
         todays_scheduled_teams_df.columns = ['Away', 'Home']
