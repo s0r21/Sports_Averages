@@ -134,14 +134,14 @@ class webscrape_functions:
             append_scheduled_teams.append(todays_scheduled_teams[k].T.iloc[0])
         todays_scheduled_teams_df = pd.DataFrame(append_scheduled_teams)
         todays_scheduled_teams_df.columns = ['Away', 'Home']
-        todays_scheduled_teams_df['Home'] = todays_scheduled_teams_df.Home.str.replace(r'(\d+[.\d]*)','')
+        todays_scheduled_teams_df['Home'] = todays_scheduled_teams_df.Home.str.replace(r'(\d+[.\d]*)','',regex = True).astype(str)
         todays_scheduled_teams_df['Home'] = todays_scheduled_teams_df['Home'].str.strip('-')
-        todays_scheduled_teams_df['Away'] = todays_scheduled_teams_df['Away'].str.replace(r'(\d+[.\d]*)','')
+        todays_scheduled_teams_df['Away'] = todays_scheduled_teams_df['Away'].str.replace(r'(\d+[.\d]*)','',regex = True).astype(str)
         todays_scheduled_teams_df['Away'] = todays_scheduled_teams_df['Away'].str.strip('-')
         todays_scheduled_teams_df_away_no_numbers = pd.DataFrame(
-            todays_scheduled_teams_df['Away'].str[:-3]).reset_index(drop=True)
+            todays_scheduled_teams_df['Away']).reset_index(drop=True)
         todays_scheduled_teams_df_home_no_numbers = pd.DataFrame(
-            todays_scheduled_teams_df['Home'].str[:-3]).reset_index(drop=True)
+            todays_scheduled_teams_df['Home']).reset_index(drop=True)
         final_schedule_df = pd.merge(todays_scheduled_teams_df_away_no_numbers['Away'].map(parameters.team_name_abbrevations),
                                      todays_scheduled_teams_df_home_no_numbers['Home'].map(parameters.team_name_abbrevations),
                                      left_index=True, right_index=True)
