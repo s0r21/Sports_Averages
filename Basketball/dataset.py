@@ -9,6 +9,7 @@ Injury_df = pd.DataFrame(Injury[0])
 Injury_array = np.array(Injury_df['Player']).astype(str)
 
 # CBS Schedule
+string_split_array = [1,2,3,4,5,6,7,8,9]
 
 class parameters:
     season_year = '2022'
@@ -111,7 +112,7 @@ class webscrape_functions:
     todays_date = date.today().strftime("%Y%m%d")
     random_date_for_testing = '20211013'
     Schedule = pd.read_html('https://www.cbssports.com/nba/scoreboard/' + todays_date + '/')
-#   Schedule.pop(len(Schedule)-1)
+#    Schedule.pop(len(Schedule)-1)
     def webscrape_dataset_function(team_array, season_year):
         df = pd.read_html(
             'https://www.basketball-reference.com/teams/' + team_array + '/' + season_year + '.html#advanced')
@@ -127,14 +128,16 @@ class webscrape_functions:
         todays_scheduled_teams = list()
         append_scheduled_teams = list()
         for i in range(0, len(webscrape_functions.Schedule)):
-            time.sleep(t)
             if i % 1 == 0:
                 todays_scheduled_teams.append(webscrape_functions.Schedule[i])
         for k in range(0, len(todays_scheduled_teams)):
-            time.sleep(t)
             append_scheduled_teams.append(todays_scheduled_teams[k].T.iloc[0])
         todays_scheduled_teams_df = pd.DataFrame(append_scheduled_teams)
         todays_scheduled_teams_df.columns = ['Away', 'Home']
+        todays_scheduled_teams_df['Home'] = todays_scheduled_teams_df.Home.str.replace(r'(\d+[.\d]*)','')
+        todays_scheduled_teams_df['Home'] = todays_scheduled_teams_df['Home'].str.strip('-')
+        todays_scheduled_teams_df['Away'] = todays_scheduled_teams_df['Away'].str.replace(r'(\d+[.\d]*)','')
+        todays_scheduled_teams_df['Away'] = todays_scheduled_teams_df['Away'].str.strip('-')
         todays_scheduled_teams_df_away_no_numbers = pd.DataFrame(
             todays_scheduled_teams_df['Away'].str[:-3]).reset_index(drop=True)
         todays_scheduled_teams_df_home_no_numbers = pd.DataFrame(
