@@ -35,7 +35,7 @@ class parameters:
     'Celtics':'BOS',
     'Nets':'BRK',
     'Raptors':'TOR',
-    '76ers':'PHI',
+    'ers':'PHI',
     'Knicks':'NYK',
     'Timberwolves':'MIN',
     'Thunder':'OKC',
