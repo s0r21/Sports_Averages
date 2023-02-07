@@ -4,9 +4,9 @@ from dataset import *
 
 class team_difference:
     def home_team_difference(team_one_average, team_two_average):
-        return(abs(team_one_average / team_two_average))
+        return((team_one_average / team_two_average)-1)
     def away_team_difference(team_one_average, team_two_average):
-        return(abs(team_two_average / team_one_average))
+        return((team_two_average / team_one_average)-1)
 class automated_method:
     @staticmethod
     def automated_function_away_team():
