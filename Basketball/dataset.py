@@ -75,13 +75,13 @@ class offence_defence_functions:
         return df
     @staticmethod
     def offence_function(FG, ThreeP, TwoP, FT, ORB):
-        final_result = (0.1 * FG) + (0.5 * ThreeP) + (0.25 * TwoP) + \
+        final_result = (0 * FG) + (0.5 * ThreeP) + (0.35 * TwoP) + \
                        + (0.1 * FT) + (0.05 * ORB)
         return final_result
     @staticmethod
     def defence_function(Stl, Blk, Drb, Pf, Tov):
-        final_result = (0.2 * Stl) + (0.1 * Blk) + \
-                       (0.1 * Drb) - ((0.3 * Pf) + (0.3 * Tov))
+        final_result = (0.15 * Stl) + (0.35 * Blk) + \
+                       (0.5 * Drb) - ((0 * Pf) + (0 * Tov))
         return final_result
     @staticmethod
     def offence_defence_combo(team_number):
