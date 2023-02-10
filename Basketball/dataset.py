@@ -75,13 +75,13 @@ class offence_defence_functions:
         return df
     @staticmethod
     def offence_function(FG, ThreeP, TwoP, FT, ORB):
-        final_result = (0 * FG) + (0.5 * ThreeP) + (0.35 * TwoP) + \
-                       + (0.1 * FT) + (0.05 * ORB)
+        final_result = (0 * FG) + (0.40 * ThreeP) + (0.40 * TwoP) + \
+                       + (0.20 * FT) + (0 * ORB)
         return final_result
     @staticmethod
     def defence_function(Stl, Blk, Drb, Pf, Tov):
-        final_result = (0.15 * Stl) + (0.35 * Blk) + \
-                       (0.5 * Drb) - ((0 * Pf) + (0 * Tov))
+        final_result = (0.20 * Stl) + (0.40 * Blk) + \
+                       (0.40 * Drb) - ((0 * Pf) + (0 * Tov))
         return final_result
     @staticmethod
     def offence_defence_combo(team_number):
@@ -148,8 +148,8 @@ class webscrape_functions:
         return final_schedule_df
 
 def normalization(df,variable):
-    variable_normalzied = float(np.sum(((df.loc[:, [variable]] - pd.DataFrame.mean(df.loc[:, [variable]])) /
-                                        pd.DataFrame.std(df.loc[:, [variable]]))))
+    variable_normalzied = float(np.sum(((df.loc[:, [variable]] - pd.DataFrame.min(df.loc[:, [variable]])) /
+                                        pd.DataFrame.max(df.loc[:, [variable]]))))
     return variable_normalzied
 def injury_function(dataset):
     dataset = dataset[~dataset.isin(Injury_df)]
