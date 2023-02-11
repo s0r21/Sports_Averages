@@ -75,8 +75,8 @@ class offence_defence_functions:
         return df
     @staticmethod
     def offence_function(FG, ThreeP, TwoP, FT, ORB):
-        final_result = (0 * FG) + (0.40 * ThreeP) + (0.40 * TwoP) + \
-                       + (0.20 * FT) + (0 * ORB)
+        final_result = (0 * FG) + (0.8 * ThreeP) + (0.15 * TwoP) + \
+                       + (0.05 * FT) + (0 * ORB)
         return final_result
     @staticmethod
     def defence_function(Stl, Blk, Drb, Pf, Tov):
