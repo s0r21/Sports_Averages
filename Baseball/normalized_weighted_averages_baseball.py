@@ -1,8 +1,8 @@
 # The weighted average formulas for the game of baseball
 import numpy as np
-
 from dataset import *
 from utils import *
+
 
 # Concatenating all the datasets into one
 Batting_df_all = pd.concat([teams.batting.ARI, teams.batting.ATL, teams.batting.BAL, teams.batting.BOS,
@@ -213,4 +213,6 @@ Final_dataframe = automated_method.final_data_frame_automated()
 file_name = create_directory('Output', 'todays_baseball_games.xlsx')
 Final_dataframe.to_excel(file_name)
 
+end_time = time.time()
 
+print((end_time - start_time)/60)

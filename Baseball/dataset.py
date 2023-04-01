@@ -1,7 +1,7 @@
 # This script is to import the data
 from utils import *
-
-year_selected = '2022' # Note: Make sure too adjust this as the new season starts.
+start_time = time.time()
+year_selected = '2023' # Note: Make sure too adjust this as the new season starts.
 Team_array = [
     'ARI',	'TBR',	'HOU',	'NYY',
     'CHW',	'BOS',	'OAK',	'SEA',
@@ -13,16 +13,36 @@ Team_array = [
     'MIA',	'PIT'
 ]
 team_abbrev = {
-    'Arizona':'ARI', 'Minnesota':'MIN', 'Washington':'WSN',
-    'Philadelphia':'PHI', 'N.Y. Yankees':'NYY', 'Oakland':'OAK',
-    'San Francisco':'SFG', 'Tampa Bay':'TBR', 'L.A. Angels' : 'LAA',
-    'Detroit':'DET', 'St. Louis':'STL', 'Chi. Cubs':'CHC',
-    'Atlanta':'ATL', 'Houston':'HOU', 'Cincinnati':'CIN',
-    'N.Y. Mets':'NYM', 'Boston':'BOS', 'Pittsburgh':'PIT',
-    'Miami':'MIA', 'Baltimore':'BAL', 'Toronto':'TOR',
-    'Cleveland':'CLE', 'Chi. White Sox':'CHW', 'Texas':'TEX',
-    'Kansas City':'KCR', 'Milwaukee':'MIL', 'Colorado':'COL',
-    'San Diego':'SDP', 'Seattle':'SEA', 'L.A. Dodgers':'LAD'
+    'Arizona':'ARI',
+    'Minnesota':'MIN',
+    'Washington':'WSN',
+    'Philadelphia':'PHI',
+    'N.Y. Yankees':'NYY',
+    'Oakland':'OAK',
+    'San Francisco':'SFG',
+    'Tampa Bay':'TBR',
+    'L.A. Angels' : 'LAA',
+    'Detroit':'DET',
+    'St. Louis':'STL',
+    'Chi. Cubs':'CHC',
+    'Atlanta':'ATL',
+    'Houston':'HOU',
+    'Cincinnati':'CIN',
+    'N.Y. Mets':'NYM',
+    'Boston':'BOS',
+    'Pittsburgh':'PIT',
+    'Miami':'MIA',
+    'Baltimore':'BAL',
+    'Toronto':'TOR',
+    'Cleveland':'CLE',
+    'Chi. White Sox':'CHW',
+    'Texas':'TEX',
+    'Kansas City':'KCR',
+    'Milwaukee':'MIL',
+    'Colorado':'COL',
+    'San Diego':'SDP',
+    'Seattle':'SEA',
+    'L.A. Dodgers':'LAD'
 }
 
 class offence_defence:
@@ -38,7 +58,6 @@ class offence_defence:
                                      axis=0)
         batting_Df = batting_Df.loc[(batting_Df['R'] != 'R')]
         batting_Df = batting_Df.dropna()
-        time.sleep(t)
         return batting_Df
     def pitching_df(web_link):
         pitching_Link = pd.read_html(web_link)
@@ -48,7 +67,6 @@ class offence_defence:
                                        axis=0)
         pitching_Df = pitching_Df.loc[(pitching_Df['H'] != 'H')]
         pitching_Df = pitching_Df.dropna()
-        time.sleep(t)
         return pitching_Df
 
 class todays_games:
